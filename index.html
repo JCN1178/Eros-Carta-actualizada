@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090909">
+<title>EROS — Carta</title>
+<style>
+:root{--bg:#080808;--panel:#111;--panel2:#171717;--text:#f5f1ea;--muted:#a99f94;--gold:#d4af63;--red:#8f1424;--line:#2a2521}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 50% -10%,#2a0b10 0,#0b0b0b 28%,#080808 58%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{padding:48px 20px 26px;text-align:center}.eyebrow{font-size:11px;letter-spacing:.35em;color:var(--gold);text-transform:uppercase}.brand{margin:8px 0 3px;font-family:Georgia,serif;font-size:54px;line-height:.95;letter-spacing:.08em}.subtitle{color:var(--muted);font-family:Georgia,serif;font-style:italic;font-size:15px}
+.sticky{position:sticky;top:0;z-index:20;padding:10px 12px 12px;background:linear-gradient(#080808f7,#080808e8 78%,transparent);backdrop-filter:blur(10px)}
+.search{max-width:620px;margin:auto;display:flex;align-items:center;border:1px solid var(--line);border-radius:15px;background:#121212;padding:0 14px}.search input{width:100%;border:0;outline:0;background:transparent;color:white;padding:13px 8px;font-size:15px}.search span{color:var(--gold)}
+.chips{max-width:760px;margin:9px auto 0;display:flex;gap:8px;overflow:auto;padding:2px 0 5px;scrollbar-width:none}.chips::-webkit-scrollbar{display:none}.chip{white-space:nowrap;border:1px solid #322b25;background:#121212;color:#d9d0c5;border-radius:999px;padding:8px 12px;font-size:12px}.chip.active{border-color:var(--gold);color:#090909;background:var(--gold)}
+main{max-width:760px;margin:auto;padding:4px 14px 72px}.section{scroll-margin-top:125px;margin:28px 0 36px}.section-title{display:flex;align-items:center;gap:12px;margin:0 4px 13px}.section-title h2{font-family:Georgia,serif;font-size:23px;font-weight:500;letter-spacing:.05em;margin:0}.section-title:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,var(--gold),transparent)}
+.card{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:15px 15px;margin:8px 0;background:linear-gradient(145deg,#151515,#0f0f0f);border:1px solid #24211e;border-radius:16px;box-shadow:0 8px 30px #0004}.name{font-size:14px;line-height:1.25;letter-spacing:.02em}.price{font-family:Georgia,serif;color:var(--gold);font-size:19px;white-space:nowrap}.price small{font-family:Inter,sans-serif;font-size:10px;color:#aa9270;margin-right:3px}
+.empty{text-align:center;color:var(--muted);padding:55px 15px}.footer{text-align:center;color:#766d64;font-size:11px;padding:0 20px 45px;letter-spacing:.08em}.orn{color:var(--gold);opacity:.75;margin:0 8px}
+@media(min-width:650px){.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.card{margin:0}.brand{font-size:68px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Night Club</div>
+  <div class="brand">EROS</div>
+  <div class="subtitle">Una noche para recordar</div>
+</header>
+<div class="sticky">
+  <div class="search"><span>⌕</span><input id="q" type="search" placeholder="Buscar bebida..." autocomplete="off"></div>
+  <div class="chips" id="chips"></div>
+</div>
+<main id="menu"></main>
+<div class="footer"><span class="orn">◆</span> EROS NIGHT CLUB <span class="orn">◆</span><br><br>Precios expresados en soles.</div>
+<script>
+const data = [
+["CHAMPAGNE","DON PERIGNON",5500],["CHAMPAGNE","MOET CHANDO",2800],
+["ESPUMANTES","CHANDON DELICE",1100],["ESPUMANTES","RICCADONNA ASTI",980],["ESPUMANTES","PETALO MOSCATO",980],
+["TEQUILAS","JOSE CUERVO",980],["TEQUILAS","1800 REPOSADO",1550],["TEQUILAS","DON JULIO REPOSADO",1600],["TEQUILAS","KICK THE RULES",980],
+["WHISKYS","JOHNNIE WALKER BLACK LEVEL MEDIA",550],["WHISKYS","JOHNNIE WALKER BLACK LEVEL",980],["WHISKYS","JOHNNIE WALKER DOUBLE BLACK",1300],["WHISKYS","JOHNNIE WALKER GOLD LEVEL",1550],["WHISKYS","JHONNIE WALKER SWING",1700],["WHISKYS","JOHNNIE WALKER GREEN LEVEL",2200],["WHISKYS","JOHNNIE WALKER BLUE LEVEL",3200],["WHISKYS","JOHNNIE 18 AÑOS 1 LITRO",2800],["WHISKYS","JACK DANIELS",980],["WHISKYS","BUCHANANS 12 AÑOS",1100],["WHISKYS","OLD PARR 12 AÑOS",980],["WHISKYS","CHIVAS REGAL 12 AÑOS",980],["WHISKYS","ROYAL SALUTE 21 AÑOS",3200],
+["RONES","ZACAPA 23",1500],["RONES","ZACAPA XO",3300],["RONES","HAVANA SPECIAL",980],["RONES","HAVANA 7 AÑOS",1100],["RONES","BOTRAN 8 AÑOS",1100],["RONES","FLOR DE CAÑA 4 AÑOS",980],["RONES","FLOR DE CAÑA 7 AÑOS",1100],["RONES","FLOR DE CAÑA 12 AÑOS",1300],
+["GINES","BULDOG LONDON DRY GIN",1200],["GINES","TANQUERAY",980],["GINES","BEEFEATER",980],
+["VODKAS","ADSOLUT ORIGINAL",980],["VODKAS","SMIRNOFF APPLE",980],["VODKAS","GREY GOOSE",1500],
+["PISCOS","4 GALLOS ACHOLADO",980],["PISCOS","4 GALLOS QUEBRANTA",980],["PISCOS","4 GALLOS ITALIA",980],["PISCOS","PORTON NEGRA CRIOLLA",1100],["PISCOS","PORTON ITALIA",1100],
+["VINOS","CASILLERO DEL DIABLO",700],["VINOS","GRAN TINTO",600],
+["VARIOS","BAILEYS IRISH CREAM",980],["VARIOS","AGUARDIENTE ANTIOQUEÑO AZUL",980],["VARIOS","AGUARDIENTE ANTIOQUEÑO ORIGEN",980],
+["CERVEZAS","YARDA PILSEN 3L",450],["CERVEZAS","CORONA EXTRA",30],["CERVEZAS","CUZQUEÑA TRIGO/DORADA",30],["CERVEZAS","PILSEN",30],
+["TRAGOS","WHISKYS",80],["TRAGOS","RON",80],["TRAGOS","BAILEYS",80],["TRAGOS","GIN",80],["TRAGOS","VODKA",80],["TRAGOS","SHOT TEQUILA",80],["TRAGOS","SHOT KICK THE RULES",80],
+["COMPLEMENTOS","RED BULL",30],["COMPLEMENTOS","VOLT",30],["COMPLEMENTOS","COCA COLA",20],["COMPLEMENTOS","AGUA MINERAL",20],
+["CIGARROS","LUCKY STRIKE 20",40],["CIGARROS","LUCKY STRIKE 10",30]
+];
+const cats=[...new Set(data.map(x=>x[0]))]; let active="TODOS";
+const fmt=n=>"S/ "+Number(n).toLocaleString("es-PE");
+function chips(){document.getElementById("chips").innerHTML=["TODOS",...cats].map(c=>'<button class="chip '+(c===active?'active':'')+'" data-c="'+c+'">'+c+'</button>').join("");document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{active=b.dataset.c;chips();render()})}
+function render(){const q=document.getElementById("q").value.trim().toUpperCase();const filtered=data.filter(x=>(active==="TODOS"||x[0]===active)&&(!q||x[1].includes(q)||x[0].includes(q)));const groups=cats.map(c=>[c,filtered.filter(x=>x[0]===c)]).filter(x=>x[1].length);document.getElementById("menu").innerHTML=groups.length?groups.map(([c,items])=>'<section class="section"><div class="section-title"><h2>'+c+'</h2></div><div class="grid">'+items.map(x=>'<div class="card"><div class="name">'+x[1]+'</div><div class="price">'+fmt(x[2])+'</div></div>').join("")+'</div></section>').join(""):'<div class="empty">No encontramos productos con esa búsqueda.</div>'}
+document.getElementById("q").addEventListener("input",render);chips();render();
+</script>
+</body>
+</html>
